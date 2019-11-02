@@ -1,7 +1,15 @@
 import { NowRequest, NowResponse } from '@now/node'
 import { Poem } from '../interfaces'
+import Nexmo from 'nexmo'
+const nexmo: any = new Nexmo({
+  apiKey: process.env.KEY || '',
+  apiSecret: process.env.SECRET || '',
+  applicationId: process.env.ID || ''
+})
+const PHONE_NUMBER = process.env.PHONE_NUMBER
 
 export default (req: NowRequest, res: NowResponse) => {
+  const { to } = req.query
   const poem: Poem = {
     id: 1,
     title: 'The Student',
@@ -14,5 +22,20 @@ export default (req: NowRequest, res: NowResponse) => {
     ]
   }
 
-  res.json(poem)
+  nexmo.message.sendSms(
+    '',
+    to,
+    poem.poem[0],
+    (err: any) => {
+      if (err) {
+        res.status(500).send({
+          message: 'error'
+        })
+      } else {
+        res.json({
+          message: 'success'
+        })
+      }
+    }
+  )
 }

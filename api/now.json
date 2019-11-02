@@ -1,0 +1,8 @@
+{
+  "env": {
+    "KEY": "@nexmo-key",
+    "SECRET": "@nexmo-secret",
+    "ID": "@nexmo-id",
+    "PHONE_NUMBER": "@phone-number"
+  }
+}
