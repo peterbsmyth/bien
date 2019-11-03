@@ -21,12 +21,10 @@ export function sendMessage(message: string, sender: number): Promise<Status> {
             message: err
           })
         } else {
-          setTimeout(() => {
-            resolve({
-              sent: true,
-              message: 'success'
-            })
-          }, 1200)
+          resolve({
+            sent: true,
+            message: 'success'
+          })
         }
       }
     )
