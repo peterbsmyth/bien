@@ -3,6 +3,7 @@
     "KEY": "@nexmo-key",
     "SECRET": "@nexmo-secret",
     "ID": "@nexmo-id",
-    "PHONE_NUMBER": "@phone-number"
+    "PHONE_NUMBER": "@phone-number",
+    "PRIVATE_KEY": "@private"
   }
 }

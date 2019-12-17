@@ -6,12 +6,10 @@ import {
 } from '../functions'
 
 export default async (req: NowRequest, res: NowResponse) => {
-  const {
-    text,
-    msisdn: sender
-  } = req.body
+  const text = req.body.message.content.text
+  const fbRecipientId = req.body.from.id
   parseText(text)
-  const poem = await getSenderNextPoem(sender)
-  await sendPoem(poem, sender)
+  const poem = await getSenderNextPoem(fbRecipientId)
+  await sendPoem(poem, fbRecipientId)
   res.status(200).send(null)
 }

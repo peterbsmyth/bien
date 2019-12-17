@@ -1,6 +1,6 @@
 import { NowRequest, NowResponse } from '@now/node'
 import { Poem } from '../interfaces'
-import Nexmo from 'nexmo'
+const Nexmo = require('nexmo')
 const nexmo: any = new Nexmo({
   apiKey: process.env.KEY || '',
   apiSecret: process.env.SECRET || '',
