@@ -3,6 +3,8 @@ import { sendPoem } from './sendPoem'
 import { parseText } from './parseText'
 import { sendMessage } from './sendMessage'
 import { delay } from './delay'
+import { getLastPoemId } from './getLastPoemId'
+import { decrementCurrentPoem } from './decrementCurrentPoem'
 
 
 export {
@@ -10,5 +12,7 @@ export {
   sendPoem,
   parseText,
   sendMessage,
-  delay
+  delay,
+  getLastPoemId,
+  decrementCurrentPoem
 }

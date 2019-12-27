@@ -2,7 +2,7 @@ import { Poem } from '../interfaces'
 import { sendMessage, delay } from './'
 
 
-export async function sendPoem (poem: Poem, fbRecipientId: string): Promise<boolean> {
+export async function sendPoem (poem: Poem, fbRecipientId: number): Promise<boolean> {
   const { lines, title } = poem
   await sendMessage(title, fbRecipientId).catch(err => console.dir(err))
   while (lines.length) {

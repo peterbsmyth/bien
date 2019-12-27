@@ -1,34 +1,26 @@
 import 'reflect-metadata';
 import { createConnection } from 'typeorm';
-import { Line, Poem } from '../entities';
+import { Poem, User } from '../entities';
+import { getLastPoemId } from './getLastPoemId';
+import { decrementCurrentPoem } from './decrementCurrentPoem';
+import { DB_CONFIG } from '../constants';
 
-export async function getSenderNextPoem(sender: number): Promise<any> {
-  const connection = await createConnection({
-    "type": "mysql",
-    "host": process.env.DB_HOST,
-    "port": 3306,
-    "username": process.env.DB_USER,
-    "password": process.env.DB_PASSWORD,
-    "database": "beyo",
-    "synchronize": true,
-    "logging": false,
-    "entities": [
-       Poem, Line
-    ],
-    "migrations": [
-       "../migration/**/*.ts"
-    ],
-    "subscribers": [
-       "../subscriber/**/*.ts"
-    ],
-    "cli": {
-       "entitiesDir": "entities",
-       "migrationsDir": "migration",
-       "subscribersDir": "subscriber"
-    }
-  });
+export async function getSenderNextPoem(fbRecipientId: number): Promise<any> {
+  const connection = await createConnection(DB_CONFIG);
+  let user = await connection.manager.findOne(User, fbRecipientId)
 
-  let savedPoem = await connection.manager.findOne(Poem, 1, {
+  if (!user) {
+     const lastPoemId = await getLastPoemId(connection)
+     user = await connection.manager.create(User, {
+        id: fbRecipientId,
+        currentPoem: lastPoemId
+     })
+  }
+
+  const currentPoemId = user.currentPoem
+  await decrementCurrentPoem(connection, user)
+
+  let savedPoem = await connection.manager.findOne(Poem, currentPoemId, {
      relations: ['lines']
   });
 

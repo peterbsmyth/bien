@@ -7,7 +7,8 @@ import {
 
 export default async (req: NowRequest, res: NowResponse) => {
   const text = req.body.message.content.text
-  const fbRecipientId = req.body.from.id
+  const fbRecipientId = +req.body.from.id
+
   parseText(text)
   const poem = await getSenderNextPoem(fbRecipientId)
   await sendPoem(poem, fbRecipientId)

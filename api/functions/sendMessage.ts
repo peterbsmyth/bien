@@ -9,7 +9,7 @@ const nexmo: any = new Nexmo({
 const FB_PAGE_ID = '107660154057161'
 
 
-export function sendMessage(message: string, fbRecipientId: string): Promise<Status> {
+export function sendMessage(message: string, fbRecipientId: number): Promise<Status> {
   const promise: Promise<Status> = new Promise<Status>((resolve, reject) => {
     // format the message to match the nexmo api
     const body = {
